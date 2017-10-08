@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using TaxiDriverManager.Data;
 using AspNet.Security.OAuth.Validation;
+using Newtonsoft.Json;
 
 namespace TaxiDriverManager
 {
@@ -93,6 +94,10 @@ namespace TaxiDriverManager
                 options.SlidingExpiration = true;
             });
 
+            services.AddMvc().AddJsonOptions(options => {
+                //options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
         }
 

@@ -25,7 +25,7 @@ namespace TaxiDriverManager.Controllers
         [HttpGet]
         public IEnumerable<Drivers> GetDrivers()
         {
-            return _context.Drivers;
+            return _context.Drivers.Include(driver => driver.Car);
         }
 
         // GET: api/Drivers/5
@@ -55,7 +55,7 @@ namespace TaxiDriverManager.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            drivers.Id = id;
             if (id != drivers.Id)
             {
                 return BadRequest();

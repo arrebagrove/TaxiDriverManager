@@ -63,4 +63,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    tr Button{
+        opacity:0;
+        transition:opacity 0.5s linear;
+    }
+
+    tr:hover Button{
+        opacity: 1;
+    }
 }
