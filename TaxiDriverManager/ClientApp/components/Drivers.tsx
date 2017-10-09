@@ -12,6 +12,8 @@ interface DriversState {
     showDriverModal: boolean;
     showEditDriverModal: boolean;
     selectedDriver: IDrivers;
+    showCarModal: boolean;
+    showEditCarModal: boolean;
 }
 
 const customStyles = {
@@ -45,7 +47,7 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
 
     constructor() {
         super();
-        this.state = { drivers: [], loading: true, showDriverModal: false, showEditDriverModal: false, selectedDriver: null };
+        this.state = { drivers: [], loading: true, showDriverModal: false, showEditDriverModal: false, selectedDriver: null, showCarModal: false, showEditCarModal: false };
               
         this.handleOpenDriverModal = this.handleOpenDriverModal.bind(this);
         this.handleCloseDriverModal = this.handleCloseDriverModal.bind(this);
@@ -54,6 +56,14 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
         this.handleAfterOpenEditDriverFunc = this.handleAfterOpenEditDriverFunc.bind(this);
         this.postDriver = this.postDriver.bind(this);
         this.putDriver = this.putDriver.bind(this);
+
+        this.handleOpenCarModal = this.handleOpenCarModal.bind(this);
+        this.handleCloseCarModal = this.handleCloseCarModal.bind(this);
+        this.handleOpenEditCarModal = this.handleOpenEditCarModal.bind(this);
+        this.handleCloseEditCarModal = this.handleCloseEditCarModal.bind(this);
+        this.handleAfterOpenEditCarFunc = this.handleAfterOpenEditCarFunc.bind(this);
+        this.postCar = this.postCar.bind(this);
+        this.putCar = this.putCar.bind(this);
 
         this.getDrviers();
     }
@@ -85,6 +95,35 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
 
     }
 
+    handleOpenCarModal (id: number) {
+        this.getDrvier(id).then((res)=>{
+            let driver = res.body as IDrivers;
+            this.setState({ showCarModal: true, selectedDriver: driver });
+        });
+      }
+      
+    handleCloseCarModal () {
+        this.setState({ showCarModal: false, selectedDriver: null });
+      }
+
+    handleOpenEditCarModal (id: number) {
+        this.getDrvier(id).then((res)=>{
+            let driver = res.body as IDrivers;
+            this.setState({ showEditCarModal: true, selectedDriver: driver });
+        });
+      }
+      
+    handleCloseEditCarModal () {
+        this.setState({ showEditCarModal: false, selectedDriver: null });
+      }
+
+    handleAfterOpenEditCarFunc(){
+        (document.getElementById('brand') as HTMLInputElement).value = this.state.selectedDriver.car.brand?this.state.selectedDriver.car.brand: "";
+        (document.getElementById('platenumber') as HTMLInputElement).value = this.state.selectedDriver.car.plateNumber? this.state.selectedDriver.car.plateNumber: "";
+        (document.getElementById('seats') as HTMLInputElement).value = this.state.selectedDriver.car.seats? this.state.selectedDriver.car.seats.toString(): "";
+
+    }
+
     public render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
@@ -92,13 +131,16 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
 
         let drivermodal = this.renderDriverModal();
         let editdrivermodal = this.renderEditDriverModal();
+        let carmodal = this.renderCarModal();
+        let editcarmodal = this.renderEditCarModal();
 
         return <div id="parentDiv">
-            <h1>Drivers</h1>
             { contents }
-            <Button bsStyle="primary" bsSize="small" onClick={this.handleOpenDriverModal} >Add new driver</Button>
+            <Button bsStyle="warning" bsSize="small" onClick={this.handleOpenDriverModal} >Add new driver</Button>
             { drivermodal }
             { editdrivermodal }
+            { carmodal }
+            { editcarmodal }
             </div>
     }
 
@@ -154,6 +196,50 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
         
     }
 
+    private renderCarModal(){
+        return <ReactModal 
+                isOpen={this.state.showCarModal}
+                contentLabel="Car Modal"
+                shouldCloseOnOverlayClick={true}
+                style={customStyles}
+                >
+                Brand:<br/>
+                <input type="text" id="brand"  placeholder="Brand"/>
+                <br/>
+                Plate number:<br/>
+                <input type="text" id="platenumber" placeholder="Plate Number"/>
+                <br/>
+                Seats:<br/>
+                <input type="number" id="seats"/>
+                <br/><br/>
+                <Button bsStyle="success" bsSize="small" onClick={this.postCar}>Submit</Button>
+                <Button bsStyle="danger" bsSize="small" onClick={this.handleCloseCarModal}>Close</Button>
+                </ReactModal>
+
+    }
+    
+    private renderEditCarModal(){
+        return <ReactModal 
+                isOpen={this.state.showEditCarModal}
+                contentLabel="Car Modal"
+                shouldCloseOnOverlayClick={true}
+                style={customStyles}
+                onAfterOpen={this.handleAfterOpenEditCarFunc}
+                >
+                Brand:<br/>
+                <input type="text" id="brand"  placeholder="Brand"/>
+                <br/>
+                Plate number:<br/>
+                <input type="text" id="platenumber" placeholder="Plate Number"/>
+                <br/>
+                Seats:<br/>
+                <input type="number" id="seats"/>
+                <br/><br/>
+                <Button bsStyle="success" bsSize="small" onClick={this.putCar}>Submit</Button>
+                <Button bsStyle="danger" bsSize="small" onClick={this.handleCloseEditCarModal}>Close</Button>
+                </ReactModal>        
+    }
+
     private postDriver(){
         const firstname = (document.getElementById('firstname') as HTMLInputElement).value;
         const lastname = (document.getElementById('lastname') as HTMLInputElement).value;
@@ -163,7 +249,7 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
         request
         .post('api/Drivers')
         .set('Content-Type','application/json')
-        .send(`{"FirstName": "${firstname}", "Lastname": "${lastname}", DateOfBirth: "${dateofbirth}", "Email": "${email}"}`)
+        .send(`{"FirstName": "${firstname}", "Lastname": "${lastname}", "CurrentStatus": "Inactive", DateOfBirth: "${dateofbirth}", "Email": "${email}"}`)
         .end( (err, res) => {
             if (err || !res.ok) {
               alert('Error');
@@ -227,6 +313,49 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
           });
     }
 
+    private postCar(){
+        const brand = (document.getElementById('brand') as HTMLInputElement).value;
+        const platenumber = (document.getElementById('platenumber') as HTMLInputElement).value;
+        const seats = (document.getElementById('seats') as HTMLInputElement).value;
+        const driverid = this.state.selectedDriver.id;
+
+        request
+        .post('api/Cars')
+        .set('Content-Type','application/json')
+        .send(`{"DriverId": "${driverid}", "Brand": "${brand}", PlateNumber: "${platenumber}", "Seats": "${seats}"}`)
+        .end( (err, res) => {
+            if (err || !res.ok) {
+              alert('Error');
+            } else {
+              //this.handleCloseDriverModal();
+              this.handleCloseCarModal();
+              this.getDrviers();
+            }
+          });
+    }
+
+    private putCar(){
+        const brand = (document.getElementById('brand') as HTMLInputElement).value;
+        const platenumber = (document.getElementById('platenumber') as HTMLInputElement).value;
+        const seats = (document.getElementById('seats') as HTMLInputElement).value;
+        const driverid = this.state.selectedDriver.id;
+        
+        
+        const id = this.state.selectedDriver.car.id;
+        request
+        .put(`api/Cars/${id}`)
+        .set('Content-Type','application/json')
+        .send(`{"DriverId": "${driverid}", "Brand": "${brand}", PlateNumber: "${platenumber}", "Seats": "${seats}"}`)
+        .end( (err, res) => {
+            if (err || !res.ok) {
+              alert('Error');
+            } else {
+              this.handleCloseEditCarModal();
+              this.getDrviers();
+            }
+          });
+    }
+
     private renderDrivers(drivers: IDrivers[]) {
         let car = drivers ? 'van':'nincs';
         let tdstyle = {visibility: 'hidden'};                              
@@ -251,8 +380,12 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
                         <td>{drivers.dateOfBirth }</td>
                         <td>{drivers.currentStatus }</td>
                         <td>{drivers.email }</td>
-                        <td>{drivers.car? 'van': 'nincs' }</td>
-                        <td>
+                        <td>{drivers.car
+                            ? <Button onClick={() => this.handleOpenEditCarModal(drivers.id)} bsStyle = "info" bsSize="xs"><span className="glyphicon glyphicon-pencil"></span></Button>
+                            : <Button onClick={() => this.handleOpenCarModal(drivers.id)} bsStyle = "success" bsSize="xs"><span className="glyphicon glyphicon-plus"></span></Button>
+                            }
+                        </td>
+                        <td id="edit">
                             <Button onClick={() => this.handleOpenEditDriverModal(drivers.id)} bsStyle = "info" bsSize="xs"><span className="glyphicon glyphicon-pencil"></span></Button>
                             <Button onClick={() => this.deleteDrviers(drivers.id)} bsStyle = "danger" bsSize="xs"><span className="glyphicon glyphicon-trash"></span></Button>
                         </td>

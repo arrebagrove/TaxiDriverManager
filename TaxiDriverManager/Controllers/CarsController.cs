@@ -11,57 +11,57 @@ using TaxiDriverManager.Models;
 namespace TaxiDriverManager.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Drivers")]
-    public class DriversController : Controller
+    [Route("api/Cars")]
+    public class CarsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public DriversController(ApplicationDbContext context)
+        public CarsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Drivers
+        // GET: api/Cars
         [HttpGet]
-        public IEnumerable<Drivers> GetDrivers()
+        public IEnumerable<Cars> GetCars()
         {
-            return _context.Drivers.Include(driver => driver.Car);
+            return _context.Cars;
         }
 
-        // GET: api/Drivers/5
+        // GET: api/Cars/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDrivers([FromRoute] int id)
+        public async Task<IActionResult> GetCars([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var drivers = await _context.Drivers.Include(driver => driver.Car).SingleOrDefaultAsync(m => m.Id == id);
+            var cars = await _context.Cars.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (drivers == null)
+            if (cars == null)
             {
                 return NotFound();
             }
 
-            return Ok(drivers);
+            return Ok(cars);
         }
 
-        // PUT: api/Drivers/5
+        // PUT: api/Cars/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDrivers([FromRoute] int id, [FromBody] Drivers drivers)
+        public async Task<IActionResult> PutCars([FromRoute] int id, [FromBody] Cars cars)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            drivers.Id = id;
-            if (id != drivers.Id)
+            cars.Id = id;
+            if (id != cars.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(drivers).State = EntityState.Modified;
+            _context.Entry(cars).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace TaxiDriverManager.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DriversExists(id))
+                if (!CarsExists(id))
                 {
                     return NotFound();
                 }
@@ -82,45 +82,45 @@ namespace TaxiDriverManager.Controllers
             return NoContent();
         }
 
-        // POST: api/Drivers
+        // POST: api/Cars
         [HttpPost]
-        public async Task<IActionResult> PostDrivers([FromBody] Drivers drivers)
+        public async Task<IActionResult> PostCars([FromBody] Cars cars)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Drivers.Add(drivers);
+            _context.Cars.Add(cars);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDrivers", new { id = drivers.Id }, drivers);
+            return CreatedAtAction("GetCars", new { id = cars.Id }, cars);
         }
 
-        // DELETE: api/Drivers/5
+        // DELETE: api/Cars/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDrivers([FromRoute] int id)
+        public async Task<IActionResult> DeleteCars([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var drivers = await _context.Drivers.SingleOrDefaultAsync(m => m.Id == id);
-            if (drivers == null)
+            var cars = await _context.Cars.SingleOrDefaultAsync(m => m.Id == id);
+            if (cars == null)
             {
                 return NotFound();
             }
 
-            _context.Drivers.Remove(drivers);
+            _context.Cars.Remove(cars);
             await _context.SaveChangesAsync();
 
-            return Ok(drivers);
+            return Ok(cars);
         }
 
-        private bool DriversExists(int id)
+        private bool CarsExists(int id)
         {
-            return _context.Drivers.Any(e => e.Id == id);
+            return _context.Cars.Any(e => e.Id == id);
         }
     }
 }
