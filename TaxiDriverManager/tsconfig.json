@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "baseUrl": ".",
@@ -15,6 +16,7 @@
   },
   "exclude": [
       "bin",
-      "node_modules"
+      "node_modules",
+      "bower_components"
   ]
 }

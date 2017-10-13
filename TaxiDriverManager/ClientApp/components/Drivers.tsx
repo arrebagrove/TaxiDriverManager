@@ -4,6 +4,8 @@ import { RouteComponentProps } from 'react-router';
 import * as request from 'superagent';
 import { Button } from 'react-bootstrap';
 import * as ReactModal from 'react-modal';
+import IDrivers from './IDrivers';
+import ICar from './ICar'
 
 
 interface DriversState {
@@ -395,22 +397,4 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
         </table>;
     }
 
-}
-
-interface IDrivers {
-        id: number, 
-        lastName: string,
-        firstName: string,
-        dateOfBirth: string,
-        currentStatus: string
-        email: string
-        car: ICar
-}
-
-interface ICar{
-    id: number,
-    brand: string,
-    driverId: number,
-    plateNumber: string,
-    seats: number
 }

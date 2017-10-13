@@ -37,6 +37,7 @@
     "@types/react-bootstrap": "^0.31.4",
     "@types/react-modal": "^2.2.2",
     "@types/superagent": "^3.5.6",
+    "google-maps-react": "https://registry.npmjs.org/google-maps-react/-/google-maps-react-1.1.0.tgz",
     "react-bootstrap": "^0.31.3",
     "react-floating-button-menu": "^1.0.8",
     "react-mfb": "^0.6.0",

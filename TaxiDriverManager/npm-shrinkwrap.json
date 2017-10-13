@@ -1250,6 +1250,18 @@
       "from": "globals@>=9.0.0 <10.0.0",
       "resolved": "https://registry.npmjs.org/globals/-/globals-9.18.0.tgz"
     },
+    "google-maps-react": {
+      "version": "1.1.0",
+      "from": "https://registry.npmjs.org/google-maps-react/-/google-maps-react-1.1.0.tgz",
+      "resolved": "https://registry.npmjs.org/google-maps-react/-/google-maps-react-1.1.0.tgz",
+      "dependencies": {
+        "history": {
+          "version": "3.3.0",
+          "from": "history@>=3.0.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/history/-/history-3.3.0.tgz"
+        }
+      }
+    },
     "graceful-fs": {
       "version": "4.1.11",
       "from": "graceful-fs@>=4.1.2 <5.0.0",
@@ -2609,8 +2621,7 @@
     "query-string": {
       "version": "4.3.4",
       "from": "query-string@>=4.1.0 <5.0.0",
-      "resolved": "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz"
     },
     "querystring": {
       "version": "0.2.0",
@@ -3276,8 +3287,7 @@
     "strict-uri-encode": {
       "version": "1.1.0",
       "from": "strict-uri-encode@>=1.0.0 <2.0.0",
-      "resolved": "https://registry.npmjs.org/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz"
     },
     "string_decoder": {
       "version": "1.0.3",
