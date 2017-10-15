@@ -4,16 +4,17 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"].</h2>
-
 <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Create a new account.</h4>
-    <hr />
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4" style="border: 1px solid grey; margin-top: 200px; padding: 20px;    box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+                        0px 10px 20px rgba(0,0,0,0.05),
+                        0px 20px 20px rgba(0,0,0,0.05),
+                        0px 30px 20px rgba(0,0,0,0.05);
+    ">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Email" class="col-md-2 control-label"></label>
         <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
+            <input asp-for="Email" value= "@ViewBag.Email" class="form-control" disabled/>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
     </div>
@@ -33,8 +34,9 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Register</button>
+            <button type="submit" style="background-color: #f0ad4e; color: white" class="btn btn-default">Register</button>
         </div>
+    </div>
     </div>
 </form>
 

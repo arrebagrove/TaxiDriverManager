@@ -36,7 +36,11 @@ namespace TaxiDriverManager.Controllers
         public IActionResult GetActiveDrivers()
         {
             var drivs = _context.Drivers.Include(d => d.Car).Where(d => d.Positions != null).Where(d => d.CurrentStatus != "Inactive")
-                    .Select(x => new { Drivers = x, Positions = x.Positions.Where(p => p.TimeStamp == x.Positions.Max(y => y.TimeStamp)).SingleOrDefault() });
+                    .Select(
+                x => new {
+                    Drivers = x,
+                    Positions = x.Positions
+                                .Where(p => p.TimeStamp == x.Positions.Max(y => y.TimeStamp)).SingleOrDefault() });
 
 
             //var drivers = _context.Drivers.FromSql("select Lastname +' ' + Firstname as 'Name'," +

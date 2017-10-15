@@ -12,6 +12,9 @@ namespace TaxiDriverManager.Models
         public int? Area { get; set; }
         public DateTime? TimeStamp { get; set; }
 
+        public double Lat { get; set; }
+        public double Lng { get; set; }
+
         [Required]
         public int DriverId { get; set; }
         public Drivers Driver { get; set; }

@@ -23,6 +23,21 @@ body {
     background-image: url('pictures/hdtaxi.jpg');
 }
 
+.homepage{
+    background: white;
+    font-family: 'Arial';
+    padding: 10px;
+    margin: 25px auto;
+    border-collapse: collapse;
+    border: 1px solid #eee;
+    border-top: 2px solid #f0ad4e;
+    border-bottom: 2px solid #f0ad4e; /* #00cccc; #f0ad4e */
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+       0px 10px 20px rgba(0,0,0,0.05),
+       0px 20px 20px rgba(0,0,0,0.05),
+       0px 30px 20px rgba(0,0,0,0.05);
+}
+
 table {
     font-family: 'Arial';
     margin: 25px auto;
@@ -36,6 +51,7 @@ table {
 }
 
 tr{
+    color: #000000;
     background: rgba(255, 255, 255, 0.9);
 }
 
@@ -43,12 +59,8 @@ tr:hover {
     background: #fff; /*#f4f4f4; */
     transition: 0.5s;            
 }
-tr td {
-    color: #555;
-}
 
 th, td {
-      color: #999;
       border: 1px solid #eee;
       padding: 12px 35px;
       border-collapse: collapse;
@@ -62,14 +74,6 @@ th {
 
 th.last {
     border-right: none;
-}
-
-h1 {
-    color: #fff;
-    font-family: 'Rouge Script', cursive; 
-    line-height: 48px; margin: 25px 0; 
-    text-align: center; 
-
 }
 
 @media (max-width: 767px) {

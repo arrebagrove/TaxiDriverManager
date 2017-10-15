@@ -3,5 +3,6 @@ export default interface IPositions{
     timeStamp: string;
     area: number;
     DriverId: number;
-
+    lat: number;
+    lng: number;
 }
