@@ -33,6 +33,7 @@
     "webpack-hot-middleware": "2.18.2"
   },
   "dependencies": {
+    "@aspnet/signalr-client": "^1.0.0-alpha2-final",
     "@types/bootstrap": "^3.3.36",
     "@types/react-bootstrap": "^0.31.4",
     "@types/react-modal": "^2.2.2",

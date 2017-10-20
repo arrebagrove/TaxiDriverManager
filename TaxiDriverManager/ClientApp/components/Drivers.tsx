@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import * as ReactModal from 'react-modal';
 import IDrivers from './IDrivers';
 import ICar from './ICar'
+import { Link } from "react-router-dom";
 
 
 interface DriversState {
@@ -390,11 +391,17 @@ export class Drivers extends React.Component<RouteComponentProps<{}>, DriversSta
                         <td id="edit">
                             <Button onClick={() => this.handleOpenEditDriverModal(drivers.id)} bsStyle = "info" bsSize="xs"><span className="glyphicon glyphicon-pencil"></span></Button>
                             <Button onClick={() => this.deleteDrviers(drivers.id)} bsStyle = "danger" bsSize="xs"><span className="glyphicon glyphicon-trash"></span></Button>
+                            <Button bsStyle = "success" bsSize="xs"><a href = {`/Account/Register/${drivers.email}`}><span className="glyphicon glyphicon-plus"></span></a></Button>
                         </td>
                 </tr>
             )}
             </tbody>
         </table>;
+    }
+
+    Register(){
+        alert("helo");
+        Response.redirect("/Account/Register");
     }
 
 }

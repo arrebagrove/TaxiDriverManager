@@ -11,12 +11,14 @@ using Microsoft.AspNetCore.Authorization;
 using AspNet.Security.OpenIdConnect.Extensions;
 using AspNet.Security.OpenIdConnect.Primitives;
 using AspNet.Security.OAuth.Validation;
+using TaxiDriverManager.Services.Sample;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace TaxiDriverManager.Controllers
 {
     [Produces("application/json")]
     [Route("api/Positions")]
-    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
     public class PositionsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,16 +28,6 @@ namespace TaxiDriverManager.Controllers
             _context = context;
         }
 
-        /*[Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme, Roles = "SuperAdmin"), HttpGet]
-        public IActionResult GetPositions()
-        {
-            return Json(new
-            {
-                Subject = User.GetClaim(OpenIdConnectConstants.Claims.Subject),
-                Role = User.GetClaim(OpenIdConnectConstants.Claims.Role),
-                Name = User.Identity.Name
-            });
-        } */
 
         // GET: api/Positions
         [HttpGet]
@@ -118,6 +110,15 @@ namespace TaxiDriverManager.Controllers
             _context.Positions.Add(positions);
             await _context.SaveChangesAsync();
 
+            var connection = new HubConnectionBuilder()
+                                .WithUrl("http://localhost:60458/chat")
+                                .WithConsoleLogger()
+                                .Build();
+
+            await connection.StartAsync();
+
+            connection.InvokeAsync("Send", "new_position");
+
             return Ok(positions.DriverId);
         }
 
@@ -125,18 +126,11 @@ namespace TaxiDriverManager.Controllers
         public async Task<IActionResult> SetStatus([FromBody] Status s)
         {
 
-            Console.WriteLine("----------------------------------------------------------------------------------");
-            Console.WriteLine(s);
-            Console.WriteLine("----------------------------------------------------------------------------------");
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            Console.WriteLine("----------------------------------------------------------------------------------");
-            Console.WriteLine(s);
-            Console.WriteLine("----------------------------------------------------------------------------------");
-            var email = User.Identity.Name; // User.GetClaim(OpenIdConnectConstants.Claims.Email);
+            var email = User.Identity.Name;
             var driverID = _context.Drivers.Single(d => d.Email == email).Id;
 
             var drivers = await _context.Drivers.SingleOrDefaultAsync(m => m.Id == driverID);

@@ -23,6 +23,11 @@ body {
     background-image: url('pictures/hdtaxi.jpg');
 }
 
+a, a:hover, a:active{
+    color: white;
+}
+
+
 .homepage{
     background: white;
     font-family: 'Arial';

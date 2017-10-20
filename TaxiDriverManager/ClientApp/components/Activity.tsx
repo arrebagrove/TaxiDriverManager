@@ -2,15 +2,16 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import * as request from 'superagent';
 import IDrivers from './IDrivers';
-import IActivity from './IActivity'
-import GoogleApiWrapper from './maps'
-import {MapContainer} from './maps'
-
+import IActivity from './IActivity';
+import GoogleApiWrapper from './maps';
+import {MapContainer} from './maps';
+import * as signalR from '@aspnet/signalr-client';
 
 interface ActivityState {
     activities: IActivity[];
     loading: boolean;
     clickedDriverId: number;
+    hubConnection: any;
 }
 
 const style = {
@@ -22,9 +23,13 @@ const style = {
 export class Activity extends React.Component<RouteComponentProps<{}>, ActivityState> {
     constructor() {
         super();
-        this.state = {clickedDriverId: null, activities: [], loading: true };
+        this.state = {hubConnection: new signalR.HubConnection('/chat'), clickedDriverId: null, activities: [], loading: true };
         this.mapCallBack = this.mapCallBack.bind(this);
         this.getActivities();
+    }
+
+    componentDidMount(){
+        this.startHubConnection();
     }
 
     public render() {
@@ -39,6 +44,9 @@ export class Activity extends React.Component<RouteComponentProps<{}>, ActivityS
         return <div>
             <div style= {{"marginTop": "525px"}}>
             { contents }
+            <button onClick= {() => this.startHubConnection()}>listen</button>
+            <button onClick= {() => this.sendSignalr()}>send</button>
+
             </div>
             <div style= {{"marginTop": "-800px"}}>
             { googleMap }
@@ -49,6 +57,15 @@ export class Activity extends React.Component<RouteComponentProps<{}>, ActivityS
     mapCallBack(id){
         this.setState({clickedDriverId: id});
         (this.props as any).google.maps.setCenter();
+    }
+
+    startHubConnection(){
+
+        this.state.hubConnection.on('send', data => {
+            this.getActivities();
+        });
+
+        this.state.hubConnection.start();        
     }
 
     private renderMap(activities: IActivity[]) {

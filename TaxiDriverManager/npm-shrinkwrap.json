@@ -2,6 +2,11 @@
   "name": "TaxiDriverManager",
   "version": "0.0.0",
   "dependencies": {
+    "@aspnet/signalr-client": {
+      "version": "1.0.0-alpha2-final",
+      "from": "@aspnet/signalr-client@latest",
+      "resolved": "https://registry.npmjs.org/@aspnet/signalr-client/-/signalr-client-1.0.0-alpha2-final.tgz"
+    },
     "@types/bootstrap": {
       "version": "3.3.36",
       "from": "@types/bootstrap@latest",
@@ -456,6 +461,11 @@
       "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-1.8.0.tgz",
       "dev": true
     },
+    "bl": {
+      "version": "1.2.1",
+      "from": "bl@>=1.2.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/bl/-/bl-1.2.1.tgz"
+    },
     "bn.js": {
       "version": "4.11.7",
       "from": "bn.js@>=4.1.1 <5.0.0",
@@ -808,8 +818,7 @@
     "core-util-is": {
       "version": "1.0.2",
       "from": "core-util-is@>=1.0.0 <1.1.0",
-      "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.2.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.2.tgz"
     },
     "create-ecdh": {
       "version": "4.0.0",
@@ -1422,8 +1431,7 @@
     "inherits": {
       "version": "2.0.3",
       "from": "inherits@>=2.0.3 <2.1.0",
-      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz"
     },
     "inline-style-prefixer": {
       "version": "2.0.5",
@@ -1610,8 +1618,7 @@
     "isarray": {
       "version": "1.0.0",
       "from": "isarray@>=1.0.0 <1.1.0",
-      "resolved": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz"
     },
     "isexe": {
       "version": "2.0.0",
@@ -1908,6 +1915,18 @@
       "version": "2.0.0",
       "from": "ms@2.0.0",
       "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
+    },
+    "msgpack5": {
+      "version": "3.5.1",
+      "from": "msgpack5@>=3.5.0 <4.0.0",
+      "resolved": "https://registry.npmjs.org/msgpack5/-/msgpack5-3.5.1.tgz",
+      "dependencies": {
+        "readable-stream": {
+          "version": "2.3.3",
+          "from": "readable-stream@>=2.3.3 <3.0.0",
+          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.3.tgz"
+        }
+      }
     },
     "nanomatch": {
       "version": "1.2.0",
@@ -2565,8 +2584,7 @@
     "process-nextick-args": {
       "version": "1.0.7",
       "from": "process-nextick-args@>=1.0.6 <1.1.0",
-      "resolved": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-1.0.7.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-1.0.7.tgz"
     },
     "promise": {
       "version": "7.3.1",
@@ -2912,8 +2930,7 @@
     "readable-stream": {
       "version": "2.3.2",
       "from": "readable-stream@>=2.0.1 <3.0.0",
-      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.2.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.2.tgz"
     },
     "readdirp": {
       "version": "2.1.0",
@@ -3045,8 +3062,7 @@
     "safe-buffer": {
       "version": "5.1.1",
       "from": "safe-buffer@>=5.1.0 <5.2.0",
-      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.1.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.1.tgz"
     },
     "sax": {
       "version": "1.2.4",
@@ -3292,8 +3308,7 @@
     "string_decoder": {
       "version": "1.0.3",
       "from": "string_decoder@>=1.0.0 <1.1.0",
-      "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.0.3.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.0.3.tgz"
     },
     "string-width": {
       "version": "1.0.2",
@@ -3606,8 +3621,7 @@
     "util-deprecate": {
       "version": "1.0.2",
       "from": "util-deprecate@>=1.0.1 <1.1.0",
-      "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
     },
     "utils-merge": {
       "version": "1.0.0",

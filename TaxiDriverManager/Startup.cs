@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using TaxiDriverManager.Data;
 using AspNet.Security.OAuth.Validation;
 using Newtonsoft.Json;
+using TaxiDriverManager.Services.Sample;
 
 namespace TaxiDriverManager
 {
@@ -28,6 +29,8 @@ namespace TaxiDriverManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddSignalR();
 
             var connection = @"Data Source=(localdb)\mssqllocaldb;Database=TaxiDriver;Trusted_Connection=True;";
             //services.AddDbContext<TaxiDriverContext>(options => options.UseSqlServer(connection));
@@ -117,6 +120,11 @@ namespace TaxiDriverManager
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<Chat>("chat");
+            });
 
             app.UseStaticFiles();
 
