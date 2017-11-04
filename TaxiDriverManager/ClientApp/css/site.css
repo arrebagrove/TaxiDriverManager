@@ -27,6 +27,18 @@ a, a:hover, a:active{
     color: white;
 }
 
+@keyframes highlight {
+    0% {
+      background: greenyellow
+    }
+    100% {
+        background: rgba(255, 255, 255, 0.9);    
+    }
+  }
+  
+.highlight {
+    animation: highlight 2s;
+  }
 
 .homepage{
     background: white;

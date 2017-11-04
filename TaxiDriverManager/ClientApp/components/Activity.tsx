@@ -44,9 +44,6 @@ export class Activity extends React.Component<RouteComponentProps<{}>, ActivityS
         return <div>
             <div style= {{"marginTop": "525px"}}>
             { contents }
-            <button onClick= {() => this.startHubConnection()}>listen</button>
-            <button onClick= {() => this.sendSignalr()}>send</button>
-
             </div>
             <div style= {{"marginTop": "-800px"}}>
             { googleMap }
@@ -56,13 +53,17 @@ export class Activity extends React.Component<RouteComponentProps<{}>, ActivityS
 
     mapCallBack(id){
         this.setState({clickedDriverId: id});
-        (this.props as any).google.maps.setCenter();
     }
 
     startHubConnection(){
 
         this.state.hubConnection.on('send', data => {
+            console.log(data);           
             this.getActivities();
+            document.getElementById(data).classList.add("highlight");
+            setInterval(() =>{
+                document.getElementById(data).classList.remove("highlight");                
+            },2500);
         });
 
         this.state.hubConnection.start();        
@@ -93,7 +94,7 @@ export class Activity extends React.Component<RouteComponentProps<{}>, ActivityS
             </thead>
             <tbody>
                 {activities.map(activities =>
-                    <tr key={ activities.drivers.id } style={activities.drivers.id == this.state.clickedDriverId? style: {}}>
+                    <tr id={activities.drivers.id.toString()} key={ activities.drivers.id } style={activities.drivers.id == this.state.clickedDriverId? style: {}}>
                         <td>{`${activities.drivers.lastName} ${activities.drivers.firstName}`}</td>
                         <td>{activities.drivers.currentStatus }</td>
                         <td>{activities.positions? activities.positions.area: "" }</td>

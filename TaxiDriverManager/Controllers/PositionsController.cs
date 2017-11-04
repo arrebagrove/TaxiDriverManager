@@ -18,7 +18,7 @@ namespace TaxiDriverManager.Controllers
 {
     [Produces("application/json")]
     [Route("api/Positions")]
-    //[Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
     public class PositionsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -117,7 +117,7 @@ namespace TaxiDriverManager.Controllers
 
             await connection.StartAsync();
 
-            connection.InvokeAsync("Send", "new_position");
+            connection.InvokeAsync("Send", driverID);
 
             return Ok(positions.DriverId);
         }
